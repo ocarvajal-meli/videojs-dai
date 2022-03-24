@@ -1,26 +1,40 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import VideoPlayer from './VideoPlayer';
 
 function App() {
+  const playerRef = React.useRef(null);
+
+  const videoJsOptions = { // lookup the options in the docs for more options
+    autoplay: true,
+    controls: true,
+    responsive: true,
+    fluid: true,
+    sources: [{
+      src: 'https://mdstrm.com/video/60b14c76b27ac10822c4fa5f.m3u8', // video server by our Media Stream account
+      type: 'application/x-mpegURL'
+    }]
+  }
+
+  const handlePlayerReady = (player: any) => {
+    playerRef.current = player;
+
+    // you can handle player events here
+    player.on('waiting', () => {
+      console.log('player is waiting');
+    });
+
+    player.on('dispose', () => {
+      console.log('player will dispose');
+    });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <h1>VideoJS with DAI (Client Side)</h1>
+      <VideoPlayer options={videoJsOptions} onReady={handlePlayerReady} />
+    </>
+  )
 }
 
 export default App;
