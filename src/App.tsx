@@ -1,38 +1,27 @@
 import React from 'react';
-import './App.css';
 import VideoPlayer from './VideoPlayer';
+import './App.css';
 
 function App() {
-  const playerRef = React.useRef(null);
 
-  const videoJsOptions = { // lookup the options in the docs for more options
-    autoplay: true,
-    controls: true,
-    responsive: true,
-    fluid: true,
-    sources: [{
-      src: 'https://mdstrm.com/video/60b14c76b27ac10822c4fa5f.m3u8', // video server by our Media Stream account
-      type: 'application/x-mpegURL'
-    }]
+  const options = {
+    player: {
+      controls: true,
+      width: 640,
+      sources: [{
+        src: 'https://mdstrm.com/video/60b14c76b27ac10822c4fa5f.m3u8',
+        type: 'application/x-mpegURL'
+      }]
+    },
+    ima: {
+      adTagUrl: 'https://pubads.g.doubleclick.net/gampad/ads?iu=/21775744923/external/vmap_ad_samples&sz=640x480&cust_params=sample_ar%3Dpremidpostoptimizedpod&ciu_szs=300x250&gdfp_req=1&ad_rule=1&output=vmap&unviewed_position_start=1&env=vp&impl=s&cmsid=496&vid=short_onecue&correlator='
+    }
   }
-
-  const handlePlayerReady = (player: any) => {
-    playerRef.current = player;
-
-    // you can handle player events here
-    player.on('waiting', () => {
-      console.log('player is waiting');
-    });
-
-    player.on('dispose', () => {
-      console.log('player will dispose');
-    });
-  };
 
   return (
     <>
       <h1>VideoJS with DAI (Client Side)</h1>
-      <VideoPlayer options={videoJsOptions} onReady={handlePlayerReady} />
+      <VideoPlayer {...options} />
     </>
   )
 }
