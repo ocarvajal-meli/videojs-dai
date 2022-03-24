@@ -1,25 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import VideoPlayer from './VideoPlayer';
 
 function App() {
+
+  const videoPlayerOptions = {
+    width: 640,
+    controls: true,
+    autoPlay: true,
+    vod: {
+      contentSourceId: '2528370',
+      videoId: 'tears-of-steel',
+      backupStream: 'https://storage.googleapis.com/interactive-media-ads/media/bbb.m3u8'
+    }
+  };
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1>VideoJS with DAI (Server Side)</h1>
+      <VideoPlayer {...videoPlayerOptions} />
+    </>
   );
 }
 
